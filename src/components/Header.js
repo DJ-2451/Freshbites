@@ -27,7 +27,7 @@ const Header = () => {
           </a>
         </div>
         <button
-          class="text-white font-semibold border px-7 py-2 bg-emerald-950 text-xl"
+          class="text-white font-semibold border px-7 py-2 bg-emerald-950 text-xl hover:bg-emerald-900"
           href="#"
         >
           Log in
