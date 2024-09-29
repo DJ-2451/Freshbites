@@ -3,7 +3,8 @@ import React from "react";
 const Header = () => {
   return (
     <>
-      <div class="flex items-center px-5 justify-around  bg-lime-200 ">
+      {/* desktop */}
+      <div class=" hidden  md:flex items-center px-5 justify-around  bg-lime-200 ">
         <a href="/">
           <img
             src="https://www.graphicdesignforum.com/uploads/default/original/3X/a/f/afa4fc15043e59ef08559bdb51bf4d469af13874.png
@@ -43,6 +44,16 @@ const Header = () => {
         >
           Log in
         </button>
+      </div>
+      {/* mobile */}
+      <div class="   flex items-center px-5 justify-around  bg-lime-200 md:hidden">
+        <a href="/">
+          <img
+            src="https://www.graphicdesignforum.com/uploads/default/original/3X/a/f/afa4fc15043e59ef08559bdb51bf4d469af13874.png
+            "
+            class="h-24 w-49 pb-5"
+          />
+        </a>
       </div>
     </>
   );
