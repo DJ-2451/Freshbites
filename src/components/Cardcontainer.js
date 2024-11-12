@@ -1,58 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Restaurantcard from "./Restaurantcard";
 
-const Cardcontainer = () => {
-  const restaurant = [
-    {
-      name: "KFC",
-      img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/4/17/9869efb0-ef0e-41eb-bffa-9d6e03eef55e_433401.JPG",
-      rating: "3.4",
-      deliveryTime: "20-25",
-      cussine: "Chicken,Burger",
-      location: "Kalyan",
-    },
-    // Duplicate entries can be replaced or removed as needed
-    {
-      name: "Grameen Kulfi",
-      img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/zma74lt3fmzb1wojuuzg",
-      rating: "4.4",
-      deliveryTime: "10-15",
-      cussine: "Kulfi",
-      location: "Kalyan",
-    },
-    {
-      name: "McDonald's",
-      img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/9/18/6d4a618f-ab85-4432-a80c-882cdb47083e_23746.jpg",
-      rating: "3.4",
-      deliveryTime: "20-25",
-      cussine: "Chicken,Burger",
-      location: "Kalyan",
-    },
-    {
-      name: "KFC",
-      img: "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2024/4/17/9869efb0-ef0e-41eb-bffa-9d6e03eef55e_433401.JPG",
-      rating: "3.4",
-      deliveryTime: "20-25",
-      cussine: "Chicken,Burger",
-      location: "Kalyan",
-    },
-    // Duplicate entries can be replaced or removed as needed
-  ];
+const CardContainer = () => {
+  let [restaurants, setRestaurants] = useState([]);
 
+  const getRestaurant = async () => {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.19630&lng=72.96750&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    );
+    const json = await data.json();
+    setRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+  };
+  console.log(restaurants);
+  useEffect(() => {
+    getRestaurant();
+  }, []);
+  // setReastaurants(getRestaurant);
   return (
-    <div className="flex flex-wrap justify-center gap-7 my-10">
-      {restaurant.map((restaurant) => (
-        <Restaurantcard
-          name={restaurant.name}
-          img={restaurant.img}
-          rating={restaurant.rating}
-          deliveryTime={restaurant.deliveryTime}
-          cussine={restaurant.cussine}
-          location={restaurant.location}
-        />
-      ))}
-    </div>
+    <>
+      <div className="flex flex-wrap justify-center gap-7 my-10 ">
+        {restaurants.map((restaurant) => (
+          <Restaurantcard
+            name={restaurant.info.name}
+            imgId={restaurant.info.cloudinaryImageId}
+            rating={restaurant.info.avgRating}
+            deliveryTime={restaurant.info.sla.slaString}
+            cussine={restaurant.info.cuisines}
+            location={restaurant.info.locality}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
-export default Cardcontainer;
+export default CardContainer;

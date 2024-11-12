@@ -1,5 +1,4 @@
 import Cardcontainer from "./Cardcontainer";
-import Restaurantcard from "./Restaurantcard";
 
 const Body = () => {
   return (
